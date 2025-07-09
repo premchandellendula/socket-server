@@ -74,6 +74,11 @@ io.on("connection", (socket) => {
             console.log(user._id)
             // console.log(newMessage.message)
             socket.in(user.id).emit("message received", newMessage)
+
+            socket.in(user.id).emit("latestMessageUpdated", {
+                chatId: _chat.id,
+                latestMessage: newMessage.message  
+            })
         })
 
         socket.off("setup", (userData) => {
