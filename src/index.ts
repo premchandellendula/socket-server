@@ -4,9 +4,9 @@ import express from 'express'
 const app = express()
 const port = process.env.PORT || 3001;
 const server = app.listen(port, () => {
-    console.log(`Server is running on localhost:3001`)
+    console.log(`Server is running on localhost:${port}`)
 })
-const allowedOrigins = ["http://localhost:3000", "https://real-time-chat-app-rem.vercel.app/"]
+const allowedOrigins = ["http://localhost:3000", "https://real-time-chat-app-rem.vercel.app"]
 app.use(cors({
     origin: function(origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -17,6 +17,10 @@ app.use(cors({
     },
     credentials: true
 }));
+
+app.get("/", (req, res) => {
+    res.send("Server is live!");
+});
 
 import { Server } from "socket.io";
 
