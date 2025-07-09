@@ -2,7 +2,8 @@ import cors from 'cors'
 import express from 'express'
 
 const app = express()
-const server = app.listen(3001, () => {
+const port = process.env.PORT || 3001;
+const server = app.listen(port, () => {
     console.log(`Server is running on localhost:3001`)
 })
 const allowedOrigins = ["http://localhost:3000", "https://real-time-chat-app-rem.vercel.app/"]
