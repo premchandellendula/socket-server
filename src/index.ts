@@ -63,22 +63,21 @@ io.on("connection", (socket) => {
     socket.on("new message", (newMessage) => {
         const _chat = newMessage.chat;
         // console.log(newMessage)
-
+        // console.log(_chat.users)
         if(!_chat.users){
             console.log("chat.users is not defined");
             return;
         }
 
         _chat.users.forEach((user: any) => {
+            io.to(_chat.id).emit("latestMessageUpdated", {
+                chatId: _chat.id,
+                latestMessage: newMessage  
+            })
             if(user.id === newMessage.user.id) return;
-            console.log(user._id)
+            // console.log(user._id)
             // console.log(newMessage.message)
             socket.in(user.id).emit("message received", newMessage)
-
-            socket.in(user.id).emit("latestMessageUpdated", {
-                chatId: _chat.id,
-                latestMessage: newMessage.message  
-            })
         })
 
         socket.off("setup", (userData) => {
